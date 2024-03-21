@@ -76,6 +76,11 @@
   cursor: pointer;
   border-radius: 30px;
 }
+.modal-color {
+  color: blue;
+  text-decoration: none;
+  
+}
 
 .avatar-gallery button {
   background-color: white;
