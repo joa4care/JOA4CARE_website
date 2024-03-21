@@ -1,0 +1,32 @@
+
+:host {
+    --primary-color: #3498db;
+    --secondary-color: #2c3e50;
+  }
+  
+  .center {
+    text-align: center;
+    margin: 4px;
+  }
+
+  .center img {
+    height: auto; 
+    border-radius: 50%;   
+    width: 100px;
+    height: 100px;
+    margin: 4px;
+  }
+  
+  .bleue {
+    border: 5px solid #dee9f5;
+    background-color: #dee9f5;
+}
+  
+h2 {
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;  
+  font-size: large;
+  margin: 0;
+  }
+
+

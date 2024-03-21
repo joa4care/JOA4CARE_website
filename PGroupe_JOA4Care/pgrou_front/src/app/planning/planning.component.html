@@ -1,0 +1,47 @@
+
+<div class="center">
+  <img src="assets/figures/logo.jpg" class="img-fluid" alt="Logo">
+</div>
+
+<div class="bleue">
+  <h2>Planning de la semaine</h2>
+</div>
+
+<div class="container">
+  <div id="calendar-container">
+    <div id="call-buttons" class="d-flex justify-content-between align-items-center flex-wrap">
+      <div id="call-date-nav-buttons" class="btn-group">
+        <button id="Previous" class="btn btn-outline-primary" mwlCalendarPreviousView [(viewDate)]="viewDate" [view]="view">
+          Précédent
+        </button>
+        <button id="Today" class="btn btn-outline-primary" mwlCalendarToday [(viewDate)]="viewDate">
+          Aujourd'hui
+        </button>
+        <button id="Next" class="btn btn-outline-primary" mwlCalendarNextView [(viewDate)]="viewDate" [view]="view">
+          Suivant
+        </button>
+      </div>
+
+      <div id="call-date-field" class="text-center" style="font-size: large">
+        {{ viewDate | calendarDate : view + "ViewTitle" : "fr" }} <br />
+      </div>
+
+      <div id="call-view-nav-button" class="btn-group" role="group">
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked />
+        <label class="btn btn-outline-primary" for="btnradio1" (click)="setView(CalendarView.Month)">Month</label>
+
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" />
+        <label class="btn btn-outline-primary" for="btnradio2" (click)="setView(CalendarView.Week)">Week</label>
+
+        <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" />
+        <label class="btn btn-outline-primary" for="btnradio3" (click)="setView(CalendarView.Day)">Day</label>
+      </div>
+    </div>
+
+    <span [ngSwitch]="view">
+      <mwl-calendar-month-view locale="fr" *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events"  (eventClicked)="goToEvent($event.event)"></mwl-calendar-month-view>
+      <mwl-calendar-week-view [dayStartHour]="8" [dayEndHour]="20" [hourSegments]="1" locale="fr" *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" (eventClicked)="goToEvent($event.event)"></mwl-calendar-week-view>
+      <mwl-calendar-day-view [dayStartHour]="8" [dayEndHour]="20" [hourSegments]="1" locale="fr" *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" (eventClicked)="goToEvent($event.event)"></mwl-calendar-day-view>
+    </span>
+  </div>
+</div>

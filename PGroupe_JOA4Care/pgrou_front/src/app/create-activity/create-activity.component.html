@@ -1,0 +1,145 @@
+
+<form class="container">
+  <div class="mb-3">
+    <div class="row g-3 align-items-center">
+      <div class="col-auto">
+        <label for="exampleInputEmail1" class="form-label"
+          >Type d'événement</label
+        >
+        <select
+          class="form-select"
+          aria-label="Default select example"
+          [(ngModel)]="newActivity.type"
+          [ngModelOptions]="{ standalone: true }"
+        >
+          <option selected>-</option>
+          <option value="me-distraire">Distraire</option>
+          <option value="etre-apaise">Apaisé</option>
+          <option value="minstruire">Instruction</option>
+          <option value="etre-soutenu">Soutien</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="formImage" class="form-label"
+      >Selectionnez l'image de l'événement</label
+    >
+    <input
+      class="form-control"
+      type="file"
+      id="formFile"
+      [(ngModel)]="newActivity.imgURL"
+      [ngModelOptions]="{ standalone: true }"
+      (change)="onFileSelected($event)"
+    />
+  </div>
+
+  <div class="mb-3">
+    <label for="exampleInputText" class="form-label">Titre </label>
+    <input
+      [(ngModel)]="newActivity.titre"
+      [ngModelOptions]="{ standalone: true }"
+      type="text"
+      class="form-control"
+      id="exampleInputText1"
+    />
+  </div>
+
+  <div class="mb-3">
+    <div class="row g-3 align-items-center">
+      <div class="col-auto">
+        <label for="Date" class="form-label"> Date </label>
+        <input
+          [(ngModel)]="newActivity.date"
+          [ngModelOptions]="{ standalone: true }"
+          type="date"
+          class="form-control"
+          id="exampleInputText1"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <div class="row g-3 align-items-center">
+      <div class="col-auto">
+        <label for="text" class="form-label"> Horaire de Début </label>
+        <input
+          [(ngModel)]="newActivity.horaire_debut"
+          [ngModelOptions]="{ standalone: true }"
+          type="time"
+          class="form-control"
+          aria-label="Horaire Debut"
+        />
+      </div>
+      <div class="col-auto">
+        <label for="text" class="form-label"> Horaire de Fin </label>
+        <input
+          [(ngModel)]="newActivity.horaire_fin"
+          [ngModelOptions]="{ standalone: true }"
+          type="time"
+          class="form-control"
+          aria-label="Horaire Fin"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <div class="row g-3 align-items-center">
+      <div class="col-auto">
+        <label for="text" class="form-label"> Prix du billet </label>
+        <div class="input-group mb-3">
+          <span class="input-group-text">€</span>
+          <input
+            [(ngModel)]="newActivity.prix"
+            [ngModelOptions]="{ standalone: true }"
+            type="number"
+            class="form-control"
+            aria-label="Amount (to the nearest euro)"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <div class="row g-3 align-items-center">
+      <div class="col-auto">
+        <label for="text" class="form-label"> Nombre max de personnes </label>
+        <input
+          [(ngModel)]="newActivity.NP_max"
+          [ngModelOptions]="{ standalone: true }"
+          type="number"
+          class="form-control"
+          aria-label="Number maximum person"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="text" class="form-label">Description</label>
+    <textarea
+      [(ngModel)]="newActivity.description"
+      [ngModelOptions]="{ standalone: true }"
+      type="text"
+      class="form-control"
+      rows="2"
+    ></textarea>
+  </div>
+
+  <div class="mb-3">
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <button
+        id="liveToastBtn"
+        (click)="getDataForm()"
+        class="btn btn-success me-md-2"
+      >
+        Ajouter événement
+      </button>
+    </div>
+  </div>
+</form>

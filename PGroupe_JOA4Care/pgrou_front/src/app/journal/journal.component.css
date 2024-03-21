@@ -1,0 +1,20 @@
+
+@media (max-width: 768px) {
+    .badge-responsive {
+        font-size: 80%;
+    }
+}
+.mb-3 {
+    margin-bottom: 1rem;
+}
+
+.slider-labels {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.slider-label {
+    font-size: 0.8em;}
+
+    

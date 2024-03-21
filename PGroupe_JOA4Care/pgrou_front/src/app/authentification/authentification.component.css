@@ -1,0 +1,95 @@
+.input-wrapper {
+  margin-bottom: 15px;
+}
+
+.form-container-bottom-space {
+  margin-bottom: 3rem;
+}
+
+.custom-input {
+  border: 0.3rem solid #fec117;
+  padding: 10px 0;
+  padding-left: 10px;
+  border-radius: 1rem;
+}
+
+.custom-label {
+  display: block;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.btn-Login {
+  background-color: #fec117;
+  border-color: #fec117;
+  color: black;
+  border-radius: 3rem;
+}
+
+.btn-Login:hover {
+  background-color: #fdaa00;
+  border-color: #fec117;
+  color: #dcdcdc;
+}
+
+.btn-secondary {
+  background-color: #fec117;
+  border-color: #fec117;
+  color: black;
+  border-radius: 3rem;
+}
+
+.btn-secondary:hover {
+  background-color: #fdaa00;
+  border-color: #fdaa00;
+  color: #dcdcdc;
+}
+
+.card {
+  border-color: black;
+  border-width: 4px;
+  border-radius: 30px;
+}
+
+.text-login {
+  font-family: DM Sans;
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+  color: #848892;
+}
+
+.bleue {
+  border: 1px solid #dee9f5;
+  background-color: #dee9f5;
+  padding: 5px;
+}
+
+.form-group {
+  margin: 20px;
+}
+
+.avatar-gallery img {
+  width: 6rem;
+  height: 6rem;
+  background-image: none;
+  cursor: pointer;
+  border-radius: 30px;
+}
+
+/* .avatar-gallery img:hover {
+  outline: 3px solid #fec117;
+  outline-offset: 4px;
+} */
+
+.avatar-gallery button {
+  background-color: white;
+  cursor: pointer;
+  border-radius: 30px;
+  border-color: white;
+  margin: 4px;
+}
+.avatar {
+  outline: 3px solid #fec117;
+  outline-offset: 3px;
+}

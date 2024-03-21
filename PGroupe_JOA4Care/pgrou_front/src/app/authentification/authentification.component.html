@@ -1,0 +1,344 @@
+
+
+<div class="container-fluid">
+  <div class="bleue text-center">
+    Pas encore inscrit?
+    <a data-bs-toggle="modal" data-bs-target="#modalRegister">Cliquez ici</a>
+  </div>
+  <br />
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="alert alert-danger" *ngIf="error">
+            <p>{{error}}</p>
+          </div>
+          <div *ngIf="isLoading" class="text-center">
+            <app-loading-spinner></app-loading-spinner>
+          </div>
+          <form
+            #authForm="ngForm"
+            (ngSubmit)="onSubmitLogin(authForm)"
+            *ngIf="!isLoading"
+          >
+            <div class="text-center">
+              <div class="text-login">
+                <p class="mt-3">Vous avez déjà un compte ?</p>
+              </div>
+            </div>
+            <div class="text-center">
+              <div class="form-group">
+                <label for="code_etablissement"
+                  >Mail (Votre code d'établissement)</label
+                >
+                <input
+                  type="email"
+                  id="email"
+                  class="form-control text-center"
+                  ngModel
+                  name="email"
+                  required
+                  email
+                />
+              </div>
+              <div class="form-group">
+                <label>Mot de passe (Votre identifiant)</label>
+                <input
+                  type="password"
+                  id="password"
+                  class="form-control text-center"
+                  ngModel
+                  name="password"
+                  required
+                  minlength="6"
+                />
+              </div>
+            </div>
+            <div class="text-center">
+              <button
+                type="submit"
+                class="btn btn-Login"
+                [disabled]="!authForm.valid"
+              >
+                Valider
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="modalRegister"
+  data-bs-backdrop="static"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          Créer votre Compte
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form
+          #authForm="ngForm"
+          (ngSubmit)="onSubmitSignUp(authForm)"
+          *ngIf="!isLoading"
+        >
+          <div class="mb-3">
+            <p>Choissisez une photo:</p>
+            <div class="avatar-gallery">
+              <div class="img-fluid row">
+                <div class="col">
+                  <div class="text-center">
+                    <button
+                      type="button"
+                      class="focus-ring focus-ring-warning py-1 px-2 text-decoration-none border rounded-7"
+                      id="avatar1"
+                      (click)="
+                        selectAvatar(1);
+                        avatarPath('../assets/figures/Avatar_1.png')
+                      "
+                    >
+                      <img
+                        src="../assets/figures/Avatar_1.png"
+                        alt="Avatar 1"
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="focus-ring focus-ring-warning py-1 px-2 text-decoration-none border rounded-7"
+                      id="avatar2"
+                      (click)="
+                        selectAvatar(2);
+                        avatarPath('../assets/figures/Avatar_2.png')
+                      "
+                    >
+                      <img
+                        src="../assets/figures/Avatar_2.png"
+                        alt="Avatar 2"
+                      />
+                    </button>
+
+                    <button
+                      type="button"
+                      class="focus-ring focus-ring-warning py-1 px-2 text-decoration-none border rounded-7"
+                      id="avatar3"
+                      (click)="
+                        selectAvatar(3);
+                        avatarPath('../assets/figures/Avatar_3.png')
+                      "
+                    >
+                      <img
+                        src="../assets/figures/Avatar_3.png"
+                        alt="Avatar 3"
+                      />
+                    </button>
+                    <button
+                      type="button"
+                      class="focus-ring focus-ring-warning py-1 px-2 text-decoration-none border rounded-7"
+                      id="avatar4"
+                      (click)="
+                        selectAvatar(4);
+                        avatarPath('../assets/figures/Avatar_4.png')
+                      "
+                    >
+                      <img
+                        src="../assets/figures/Avatar_4.png"
+                        alt="Avatar 4"
+                      />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="custom-label">Votre adresse mail</label>
+              <input
+                type="email"
+                id="email"
+                class="form-control custom-input"
+                ngModel
+                name="email"
+                required
+                email
+              />
+            </div>
+            <div class="form-group">
+              <label class="custom-label">Créez un mot de passe </label>
+              <input
+                type="password"
+                id="password"
+                class="form-control custom-input"
+                ngModel
+                name="password"
+                required
+                minlength="6"
+              />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="checkbox-container">
+              <input
+                type="checkbox"
+                id="termsCheckbox"
+                [(ngModel)]="termsAccepted"
+                name="termsAccepted"
+                required
+              />
+              <label for="termsCheckbox"
+                >J'ai lu et j'accepte les
+                <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal"
+                  ><strong
+                    >Conditions d'utilisation et la Politique de
+                    confidentialité</strong
+                  ></a
+                >.</label
+              >
+            </div>
+            <button
+              type="submit"
+              data-bs-dismiss="modal"
+              class="btn btn-Login"
+              [disabled]="!authForm.valid || !termsAccepted"
+            >
+              {{ isLoginMode ? "Valider" : "Créer votre compte" }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="termsModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="termsModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="termsModalLabel">
+          Termes d'Utilisation Joa4Care
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <h2>1. Introduction</h2>
+        <p>
+          Bienvenue sur Joa4Care, une plateforme dédiée à l'amélioration du
+          séjour des patients hospitalisés en offrant un accès à diverses
+          activités proposées par des entreprises inscrites. En utilisant notre
+          service, vous acceptez les termes et conditions énoncés dans ce
+          document.
+        </p>
+
+        <h2>2. Services Offerts</h2>
+        <p>
+          Joa4Care permet aux entreprises de s'inscrire et de proposer des
+          activités, gratuites ou payantes, destinées aux patients hospitalisés.
+          Ces activités peuvent varier et sont destinées à améliorer le
+          bien-être et le confort des patients durant leur séjour hospitalier.
+        </p>
+
+        <h2>3. Inscription et Accès</h2>
+        <p>
+          Pour accéder à notre plateforme et proposer des activités, les
+          entreprises doivent s'inscrire en fournissant une adresse e-mail
+          valide. Les utilisateurs qui cherchent à bénéficier des activités
+          n'ont pas besoin de créer un compte mais peuvent être invités à
+          fournir certaines informations de base pour participer aux activités.
+        </p>
+
+        <h2>4. Collecte de Données</h2>
+        <p>
+          Joa4Care collecte uniquement les adresses e-mail des entreprises
+          inscrites. Cette collecte vise à faciliter la communication et la
+          gestion des comptes. Aucune autre donnée personnelle n'est collectée
+          sans consentement explicite.
+        </p>
+
+        <h2>5. Confidentialité et Partage de Données</h2>
+        <p>
+          Joa4Care s'engage à protéger la confidentialité des données de ses
+          utilisateurs. Les adresses e-mail collectées ne seront pas partagées
+          avec des tiers sans consentement préalable.
+        </p>
+
+        <h2>6. Propriété Intellectuelle</h2>
+        <p>
+          Tout le contenu proposé par les entreprises sur la plateforme
+          Joa4Care, y compris, mais sans s'y limiter, les textes, images, et
+          vidéos, reste la propriété de l'entreprise concernée. Joa4Care ne
+          revendique aucun droit de propriété sur ce contenu.
+        </p>
+
+        <h2>7. Limitation de Responsabilité</h2>
+        <p>
+          Joa4Care ne sera pas responsable des dommages indirects, accidentels,
+          spéciaux, consécutifs ou punitifs résultant de l'utilisation de la
+          plateforme ou des activités proposées.
+        </p>
+
+        <h2>8. Modifications des Termes</h2>
+        <p>
+          Joa4Care se réserve le droit de modifier les présents termes
+          d'utilisation à tout moment. Les utilisateurs seront informés de toute
+          modification significative par e-mail ou par une notification sur la
+          plateforme.
+        </p>
+
+        <h2>9. Résolution des Conflits</h2>
+        <p>
+          Tout litige lié à l'utilisation de la plateforme Joa4Care sera soumis
+          à la médiation et, si nécessaire, résolu par les tribunaux compétents.
+        </p>
+
+        <h2>10. Contact</h2>
+        <p>
+          Pour toute question ou préoccupation concernant ces termes
+          d'utilisation, veuillez nous contacter à [adresse e-mail de contact].
+        </p>
+
+        <p>
+          En utilisant Joa4Care, vous reconnaissez avoir lu, compris et accepté
+          ces termes d'utilisation.
+        </p>
+      </div>
+
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-target="
+          #modalRegister"
+          data-bs-toggle="modal"
+        >
+          Fermer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

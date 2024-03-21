@@ -1,0 +1,150 @@
+/*     LOGO     */
+.center {
+  text-align: center;
+  margin: 4px;
+}
+
+.center img {
+  height: auto;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  margin: 4px;
+}
+/*   BODY */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+.button-container {
+  display: flex;
+  justify-content: space-between; 
+}
+
+.button-container button {
+  margin-right: 10px;
+}
+
+.banner_titre_bleu {
+  background-color: #dee9f5; /* */
+  color: #000; /* Noir */
+  padding: 20px;
+  text-align: center;
+}
+.description-content {
+  max-width: 100%; 
+  word-wrap: break-word;
+}
+
+.truncate-text {
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  width: 100%;
+  max-width: 100%;
+}
+
+.description-box {
+  max-height: 200px; 
+  overflow-y: auto; 
+  border: 1px solid #ccc; 
+  padding: 10px; 
+}
+
+.banner_titre_bleu h1 {
+  margin: 0;
+}
+/*      BANNER ACTIVITE  */
+.banner_activite {
+  background-color: #d3cccc6c; /* */
+  color: #c7c5c5; /* Noir */
+  padding: 20px;
+  text-align: justify;
+  margin: 20px;
+}
+.banner_activite section {
+  margin: 20px;
+}
+.banner_activite h2 {
+  margin: 0;
+}
+.banner_activite p {
+  margin: 0;
+}
+.subtitle_banner {
+  color: #000; /* Noir */
+  padding-left: 40px;
+  text-align: justify;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.description_banner {
+  color: black;
+  font-size: 20;
+  padding-left: 10px;
+  text-align: justify;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.subtitle_banner p {
+  padding-left: 40px;
+  margin: 0;
+}
+.container {
+  display: flex;
+}
+.prix {
+  flex: 1;
+  max-width: 40px;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+.description {
+  flex: 7;
+  align-items: center;
+  padding: 10px;
+}
+.imageContainer {
+  flex: 2;
+  overflow: hidden;
+  border: 1px solid #ddd;
+}
+.responsive-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: scale-down;
+}
+h2 {
+  text-align: justify;
+  font-weight: bold;
+  font-size: large;
+  color: #000;
+}
+p {
+  text-align: justify;
+  font-size: medium;
+  color: #000;
+}
+
+a {
+  align-self: flex-end;
+}
+
+img {
+  border: 5px solid #dee9f5;
+  border-radius: 20px;
+  height: 230px;
+}
+
+.btn-secondary {
+  background-color: #fec117;
+  border-color: #fec117;
+}
+
+.btn-secondary:hover {
+  background-color: #e6b410;
+  border-color: #e6b410;
+}

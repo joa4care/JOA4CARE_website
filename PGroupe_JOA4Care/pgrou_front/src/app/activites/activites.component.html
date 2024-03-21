@@ -1,0 +1,533 @@
+
+<div *ngIf="isADM()">
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a routerLink="/Creer-Activite" class="btn btn-success" type="button"
+      >Ajouter événement</a
+    >
+  </div>
+</div>
+
+<div *ngIf="admMASTER.includes(uid)">
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+    <div class="btn-group">
+      <button
+        type="button"
+        class="btn btn-primary dropdown-toggle"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        Gérer adms
+      </button>
+      <ul class="dropdown-menu">
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Rechercher..."
+            (input)="filterNames($event)"
+          />
+        </div>
+        <div *ngFor="let email of filteredEmails">
+          <li>
+            <a
+              class="dropdown-item"
+              (click)="handleUserClick(email)"
+              data-bs-toggle="modal"
+              data-bs-target="#userModal"
+              >{{ email }}</a
+            >
+          </li>
+        </div>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="center"><img src="assets/figures/logo.jpg" /></div>
+
+<h1 class="banner_titre_bleu">{{ formattedTitle }}</h1>
+<div *ngIf="isFetching" style="text-align: center">
+  <app-loading-spinner></app-loading-spinner>
+</div>
+
+<div *ngIf="displayedActivites.length < 1 && !isFetching">
+  <p>Pas d'activités plannifiées pour le moment</p>
+</div>
+
+<div *ngIf="displayedActivites.length >= 1 && !isFetching">
+
+  <div *ngFor="let activite of displayedActivites; let i = index">
+    <section class="mb-4">
+      <div class="row banner_activite">
+        <div class="col-md-5">
+          <h2 class="subtitle_banner">{{ activite.titre }}</h2>
+          <div class="description_banner">
+            <strong>Description:</strong><br>
+            <div class="description-content"><p class="truncate-text">{{ activite.description }}</p></div>
+          </div>
+        </div>
+        
+        <div class="col-md-2 offset-md-4 align-self-end">
+          <img src="{{ activite.imgURL }}" class="img-fluid" alt="" />
+        </div>
+        
+        <div class="col-md-1 align-self-end text-end" *ngIf="isADM()">
+          <div class="mt-3">
+            <a href="javascript:void(0);" data-bs-toggle="modal" [attr.data-bs-target]="'#editModal' + i">
+              <img src="../assets/figures/editer.png" alt="Ícone" width="30" style="max-width: 30px; height: auto; margin-left: 5px" />
+            </a>
+          </div>
+        </div>
+        
+        <!-- Botão "En Savoir Plus" (canto inferior esquerdo) -->
+        <div class="col-md-5 align-self-start mt-3">
+          <a type="button" class="btn btn-dark" data-bs-toggle="modal" [attr.data-bs-target]="'#' + activite.id">
+            En Savoir Plus
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+
+<!-- Modal for users -->
+
+      <div
+        class="modal fade"
+        id="userModal"
+        tabindex="-1"
+        aria-labelledby="userModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="userModalLabel">Infos utilisateur</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <p>Email: {{ selectedUser.email }}</p>
+              <p>Role: {{ selectedUser.role }}</p>
+
+              <div *ngIf="selectedUser.role !== 'Admin'">
+                <button
+                  class="btn btn-primary"
+                  (click)="changeRole(selectedUser.id, 'Admin')"
+                >
+                  Changer à admin
+                </button>
+              </div>
+              <div *ngIf="selectedUser.role === 'Admin'">
+                <button
+                  class="btn btn-primary"
+                  (click)="changeRole(selectedUser.id, 'Normal user')"
+                >
+                  Changer à Normal user
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<!-- Modal for en savoir plus button -->
+
+<div *ngFor="let activite of displayedActivites; let i = index">
+
+     <div
+class="modal fade"
+[attr.id]="activite.id"
+data-bs-keyboard="false"
+tabindex="-1"
+aria-labelledby="staticBackdropLabel"
+aria-hidden="true"
+>
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h1 class="modal-title fs-5" id="staticBackdropLabel">
+        {{ activite.titre }}
+      </h1>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      ></button>
+    </div>
+
+    <div class="modal-body">
+      <div class="text-center">
+        <img src="{{ activite.imgURL }}" class="img-fluid" alt="" />
+      </div>
+
+      <br />
+      <b>Date: </b> {{ activite.date }} 
+      <br />
+      <b>Horaire:</b> De {{ activite.horaire_debut }} jusqu'à {{activite.horaire_fin}}
+      <br />
+      <b>Inscrits: </b> {{ activite.NP_inscrit }}/{{ activite.NP_max }}
+      <br />
+      <b>Prix: </b> {{ activite.prix }}€
+      <br />
+      <div class="description-box">
+      <div class="description-content" >
+      {{ activite.description }}
+      </div>
+      </div>
+      </div>
+
+
+    <div class="d-flex justify-content-end mb-3"> 
+      <div class="me-3"> 
+        <div *ngIf="!expired(activite)">
+          <button
+            type="button"
+            class="btn btn-success"
+            (click)="sinscrire(activite)"
+          >
+            S'Inscrire
+          </button>
+          <p *ngIf="isFetching" class="ms-2">Loading...</p> 
+        </div>
+      </div>
+      <div>
+        <div *ngIf="admMASTER.includes(uid)" class="button-container">
+          <button
+              type="button"
+              class="btn btn-danger"
+              data-bs-toggle="modal"
+              [attr.data-bs-target]="'#rating' + activite.id"
+          >
+              Evaluations
+          </button>
+      
+          <button
+              type="button"
+              class="btn btn-dark"
+              data-bs-toggle="modal"
+              [attr.data-bs-target]="'#list' + activite.id"
+          >
+              Inscrits
+          </button>
+      </div>
+      
+      </div>
+    </div>            
+  </div>            
+</div>
+    </div>
+
+</div>
+
+
+<!-- Starting Modal for events -->
+
+<div *ngFor="let activite of displayedActivites; let i = index">
+
+<!-- Modal to edit events -->
+
+      <div
+        class="modal fade"
+        [attr.id]="'editModal' + i"
+        tabindex="-1"
+        [attr.aria-labelledby]="'editModalLabel' + i"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editModalLabel{{ i }}">
+                Éditer activité {{activite.titre}}
+              </h5>
+
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form
+                [id]="'editForm' + i"
+                (ngSubmit)="onUpdateActivite(activite, activite.id)"
+                #editForm="ngForm"
+              >
+                <div class="form-group">
+                  <label for="type{{ i }}">Type d'évenement</label>
+                  <select
+                    class="form-control"
+                    id="type{{ i }}"
+                    name="type"
+                    [(ngModel)]="activite.type"
+                    required
+                  >
+                    <option value="">-</option>
+                    <option value="me-distraire">Distraire</option>
+                    <option value="etre-apaise">Apaisé</option>
+                    <option value="minstruire">Instruction</option>
+                    <option value="etre-soutenu">Soutien</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="titre{{ i }}">Titre</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="titre{{ i }}"
+                    name="titre"
+                    [(ngModel)]="activite.titre"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="date{{ i }}">Date</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="date{{ i }}"
+                    name="date"
+                    [(ngModel)]="activite.date"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="horaire_debut{{ i }}">Horaire de Début</label>
+                  <input
+                    type="time"
+                    class="form-control"
+                    id="horaire_debut{{ i }}"
+                    name="horaire_debut"
+                    [(ngModel)]="activite.horaire_debut"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="horaire_fin{{ i }}">Horaire de Fin</label>
+                  <input
+                    type="time"
+                    class="form-control"
+                    id="horaire_fin{{ i }}"
+                    name="horaire_fin"
+                    [(ngModel)]="activite.horaire_fin"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="prix{{ i }}">Prix du billet</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="prix{{ i }}"
+                    name="prix"
+                    [(ngModel)]="activite.prix"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="NP_max{{ i }}">Nombre max de personnes</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="NP_max{{ i }}"
+                    name="NP_max"
+                    [(ngModel)]="activite.NP_max"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="description{{ i }}">Description</label>
+                  <textarea
+                    class="form-control"
+                    id="description{{ i }}"
+                    name="description"
+                    [(ngModel)]="activite.description"
+                    required
+                  ></textarea>
+                </div>
+
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-danger"
+                    data-bs-toggle="modal"
+                    [attr.data-bs-target]="'#delete' + activite.id"
+                  >
+                    Exclure
+                  </button>
+                  <button type="submit" class="btn btn-success">
+                    Mettre à jour
+                  </button>
+                  
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+<!-- Modal to confirm removing events -->
+
+      <div
+      class="modal fade"
+      [attr.id]="'delete' + activite.id"
+      tabindex="-1"
+      aria-labelledby="confirmDeleteModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5
+              class="modal-title"
+              id="confirmDeleteModalLabel"
+              style="color: black; font-weight: bold"
+            >
+              Confirmation
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p style="color: black">
+              Êtes-vous sûr de vouloir supprimer {{ activite.titre }}?
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-danger"
+              data-bs-dismiss="modal"
+              (click)="deleteActivite(activite.id)"
+            >
+              Oui, je veux supprimer cet événement
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Annuler action
+            </button>
+          </div>
+        </div>
+      </div>
+      </div>
+
+<!-- Modal for verify comments and ratings for each activite -->
+
+      <div 
+      class="modal fade"
+       [attr.id]="'rating' + activite.id" 
+       tabindex="-1" 
+       aria-labelledby="ratingModal" 
+       aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ratingModal">
+          Evaluations {{ activite.titre }}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead class="table-dark">
+              <tr>
+                <th scope="col" class="text-center">Utilisateur</th>
+                <th scope="col" class="text-center">Eval.</th>
+                <th scope="col" class="text-center">Comment.</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let comment of comments">
+                <ng-container *ngIf="comment.activite_id === activite.id">
+                  <td>{{ comment.email }}</td>
+                  <td class="text-center">{{ comment.rating }} / 5</td>
+                  <td style="max-width: 300px; overflow-y: auto;">{{ comment.comment }}</td>
+                </ng-container>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="3" class="text-center fs-5">Moyenne: <strong>{{ getAverageRating(activite.id) }} / 5</strong></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+      </div>
+
+<!-- Modal for subscribers -->
+
+      <div
+       class="modal fade"
+       [attr.id]="'list' + activite.id" 
+       tabindex="-1" 
+       aria-labelledby="ratingModal" 
+       aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ratingModal">
+          Liste d'inscriptions {{ activite.titre }}
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead class="table-dark">
+              <tr>
+                <th scope="col" class="text-center">Utilisateur</th>
+                <th scope="col" class="text-center">Inscription</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let email of listeDeInscrits(activite.id)">
+
+                  <td>{{ email }}</td>
+
+                  <div *ngIf="!expired(activite), else expire" class="text-center">
+                    <td class="text-center"><button class="btn btn-danger" (click)="EnleverInscription(email,activite)">Enlever</button></td>
+                  </div>
+
+                  <ng-template #expire>
+                    <td class="text-center">Validé</td>
+                  </ng-template>
+
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="3" class="text-center fs-5">Inscrits: <strong>{{ activite.NP_inscrit}} / {{activite.NP_max}}</strong></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- END MODALS -->
+
+</div>
