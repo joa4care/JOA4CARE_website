@@ -26,7 +26,6 @@ export class AppComponent implements OnInit, OnDestroy {
   ids: (string | undefined)[] = [];
   uids: string[] = [];
   id_user: string | undefined;
-  // userAvatar: Avatar | undefined;
   userAvatar: any;
 
   constructor(

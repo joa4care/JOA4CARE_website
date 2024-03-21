@@ -45,7 +45,6 @@ export class CreateActivityComponent {
 
       this.db.database.ref('/activites').push(this.newActivity);
 
-      // Appelle de la fonction pour effacer tous les champs.
       this.clearForm();
       alert('Lévénement a été créé');
       this.router.navigate(['/acceuil']);
@@ -55,7 +54,6 @@ export class CreateActivityComponent {
   }
 
   isNewActivityEmpty(): boolean {
-    // Verifica se todos os campos estão preenchidos
     return !!(
       this.newActivity.NP_max &&
       this.newActivity.date &&
@@ -68,7 +66,6 @@ export class CreateActivityComponent {
     );
   }
 
-  // Efface tous les champs.
   clearForm() {
     this.newActivity = {
       NP_max: 0,
@@ -93,9 +90,7 @@ export class CreateActivityComponent {
     if (file) {
       this.imageUploadService.uploadImage(file).subscribe(
         (url) => {
-          // Criar uma referência com a URL do arquivo carregado
           const ref = this.storage.refFromURL(url);
-          // Obter a URL de download do arquivo
           ref.getDownloadURL().subscribe(
             (downloadURL) => {
               this.newActivity.imgURL = downloadURL;

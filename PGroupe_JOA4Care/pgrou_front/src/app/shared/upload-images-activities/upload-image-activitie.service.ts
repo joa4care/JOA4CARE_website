@@ -33,17 +33,4 @@ export class UploadImageActivitieService {
         });
     });
   }
-
-  // private async saveImageUrlToDatabase(
-  //   activityId: string,
-  //   imageUrl: string
-  // ): Promise<void> {
-  //   try {
-  //     await this.db.database
-  //       .ref(`activites/${activityId}/image-activite`)
-  //       .push(imageUrl);
-  //   } catch (error) {
-  //     throw error;
-  //   }
-  // }
 }

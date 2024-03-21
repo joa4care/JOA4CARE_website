@@ -397,12 +397,8 @@ export class ActivitesComponent implements OnInit {
         .ref(`/activites/${activiteId}`)
         .once('value');
       const activiteData = snapshot.val();
-      const imageURLToDelete = activiteData.imgURL; // Enregistre l'URL de l'image à supprimer
-
-      // Obtenir une référence au fichier stocké à l'aide de l'URL
+      const imageURLToDelete = activiteData.imgURL; 
       const ref = this.storage.refFromURL(imageURLToDelete);
-
-      // Supprimer l'archive
       await ref.delete().toPromise();
     } catch (error) {
       console.error(

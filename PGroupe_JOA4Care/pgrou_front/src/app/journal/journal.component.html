@@ -6,7 +6,6 @@
                 <h4 class="alert-heading">Mes Activités à Venir</h4>
             </div>
             <ul class="list-group">
-                <!-- Lista de atividades futuras -->
                 <li class="list-group-item" *ngFor="let activity of futureActivities">
                     <div class="row align-items-center">
                         <div class="col-md-4 text-center">
@@ -30,7 +29,6 @@
                 <h4 class="alert-heading">Mes Activités Passées / Evaluées</h4>
             </div>
             <ul class="list-group">
-                <!-- Lista de atividades passadas -->
 <li class="list-group-item" *ngFor="let pastActivity of pastActivities">
     <div class="row align-items-center">
         <div class="col-md-3 text-center">
@@ -42,7 +40,6 @@
         <div class="col-md-3 text-center">
             <span class="badge custom-badge" [ngClass]="{'bg-success': pastActivity.status === 'validé', 'bg-warning': pastActivity.status === 'en attente'}">{{ pastActivity.status }}</span>
         </div>
-        <!-- Estrelas das atividades passadas -->
         <div class="col-md-3 text-center">
             <ng-container *ngIf="getStarsArray(pastActivity.id) > 0; else evaluer">
                 <ng-container *ngFor="let _ of [].constructor(getStarsArray(pastActivity.id))">
@@ -73,7 +70,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- Entrada numérica -->
                 <div class="mb-3">
                     <label for="customRange2" class="form-label">Evaluation</label>
                     <input type="range" 
@@ -91,7 +87,6 @@
                         <span class="slider-label">5</span>
                     </div>
                 </div>
-                <!-- Entrada de texto -->
                 <div class="form-floating">
                     <textarea class="form-control" 
                     placeholder="Leave a comment here"

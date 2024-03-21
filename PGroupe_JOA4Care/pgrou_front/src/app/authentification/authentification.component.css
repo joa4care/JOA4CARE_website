@@ -77,11 +77,6 @@
   border-radius: 30px;
 }
 
-/* .avatar-gallery img:hover {
-  outline: 3px solid #fec117;
-  outline-offset: 4px;
-} */
-
 .avatar-gallery button {
   background-color: white;
   cursor: pointer;
