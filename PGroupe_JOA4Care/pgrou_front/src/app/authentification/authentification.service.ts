@@ -61,6 +61,9 @@ export class AuthentificationService {
   }
 
   private saveUserDataToDatabase(email: string, photo: string, uid: string) {
+    if (!photo) {
+      photo = '../assets/figures/Avatar_4.png';
+    }
     this.user.pipe(take(1)).subscribe((user) => {
       this.http
         .post(
