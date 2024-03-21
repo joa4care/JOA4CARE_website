@@ -102,7 +102,7 @@ export class JournalComponent implements OnInit {
       const rating = acArray[index].rating;
       return rating;
     } else {
-      return 0;
+      return -1;
     }
   }
 
@@ -115,7 +115,7 @@ export class JournalComponent implements OnInit {
   submitEvaluation(id_activite: string, rate: number, comment: any) {
     const user = this.afAuth.user.value;
     const id_user = this.ids[this.uids.indexOf(user.id)];
-    if (comment === undefined) {
+    if (comment === undefined || comment.trim() === "") {
       comment = 'No comments';
     }
     this.db.database
@@ -131,5 +131,7 @@ export class JournalComponent implements OnInit {
 
   setSelectedActivity(activity: any): void {
     this.selectedActivity = activity;
+    this.comment = this.userActivites_names[activity.id].comment;
+    this.rate = this.userActivites_names[activity.id].rating;
   }
 }

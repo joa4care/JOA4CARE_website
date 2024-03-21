@@ -54,7 +54,7 @@ export class PlanningComponent {
             ac_color = 'red';
             ac_secondary = '#F7CAAC';
           } else if (
-            activite.NP_max - activite.NP_inscrit <
+            activite.NP_max - activite.NP_inscrit <=
             activite.NP_max / 2
           ) {
             ac_color = 'yellow';

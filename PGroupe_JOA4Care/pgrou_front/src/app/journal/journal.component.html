@@ -8,13 +8,16 @@
             <ul class="list-group">
                 <li class="list-group-item" *ngFor="let activity of futureActivities">
                     <div class="row align-items-center">
-                        <div class="col-md-4 text-center">
+                        <div class="col-md-3 text-center">
                             <h6 class="fw-bold">{{ activity.titre }}</h6>
                         </div>
-                        <div class="col-md-4 text-center">
+                        <div class="col-md-3 text-center">
+                            <span class="fw-bold">{{ activity.type }}</span>
+                        </div>
+                        <div class="col-md-3 text-center">
                             <span class="fw-bold">{{ activity.horaire_date_debut | date}}</span>
                         </div>
-                        <div class="col-md-4 text-center">
+                        <div class="col-md-3 text-center">
                             <span class="badge custom-badge"><button class="btn btn-dark" (click)="EnleverInscription(activity)">Désinscrire</button></span>
                         </div>
                     </div>

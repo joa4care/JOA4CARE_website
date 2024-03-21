@@ -265,7 +265,7 @@ export class ActivitesComponent implements OnInit {
       })
 
       .then(async () => {
-        return await this.deleteImageFromStorage(activiteId); // Exclui a imagem do armazenamento
+        return await this.deleteImageFromStorage(activiteId); 
       })
       .then(() => {
         return this.db.database.ref(`/activites/${activiteId}`).remove();
@@ -327,6 +327,7 @@ export class ActivitesComponent implements OnInit {
           const updateData: UpdateData = {};
           updateData[name] = {
             titre: activite.titre,
+            type: activite.type,
             status: 'En attente',
           };
 
